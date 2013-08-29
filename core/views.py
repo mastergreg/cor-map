@@ -14,24 +14,17 @@ SQSIZE=3
 LQSIZE=2
 
 def landing(request):
-    '''
-    im = Image.open("map.png")
+    im = Image.open("media/map.png")
     global IMAGE_WIDTH
     global IMAGE_HEIGHT
     IMAGE_WIDTH, IMAGE_HEIGHT = im.size
     draw = ImageDraw.Draw(im)
     net = Marker.objects.all()
-    print net.values()
-    for row in net.values():
-        for pt in row.values():
+    for pt in net:
             print pt
-            color = pt.color()
             x,y = normalize(pt.getX(), pt.getY())
-            draw.ellipse((x-SQSIZE, y-SQSIZE, x+SQSIZE, y+SQSIZE), outline='white')
-            draw.point((x, y), fill='yellow')
-            draw.ellipse((x-LQSIZE, y-LQSIZE, x+LQSIZE, y+LQSIZE), fill=color)
-    im.save("map.png", "PNG")
-    '''
+            draw.rectangle([x+2, y+2, x-2, y-2])
+    im.save("media/map.png", "PNG")
 
     return render_to_response("landing.html", locals(), RequestContext(request))
 

@@ -21,4 +21,4 @@ class Marker(models.Model):
         self.visits += 1
 
     def __unicode__(self):
-        return self.address
+        return str(self.x) + " " + str(self.y)
