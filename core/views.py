@@ -35,7 +35,7 @@ def landing(request):
     for pt in markers:
             print pt
             x,y = normalize(pt.getX(), pt.getY())
-            draw.rectangle((x-SQSIZE, y-SQSIZE, x+SQSIZE, y+SQSIZE))
+            draw.rectangle([(x-SQSIZE, y-SQSIZE), (x+SQSIZE, y+SQSIZE)], fill=(255, 255))
     im.save("media/trans_map.png", "PNG")
 
     return render_to_response("landing.html", locals(), RequestContext(request))
