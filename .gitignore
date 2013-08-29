@@ -1,0 +1,6 @@
+regnumdb
+*.pyc
+*.swp
+*.swo
+*.swn
+*.~swp
