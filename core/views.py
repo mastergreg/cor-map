@@ -49,7 +49,7 @@ def landing(request):
         im.save("media/map_full.png", "PNG")
         dz_creator = deepzoom.ImageCreator(tile_size=128, tile_overlap=2, tile_format="png",
                                                 image_quality=0.8, resize_filter="bicubic")
-        dz_creator.create("media/map_full.png", "media/map_full.dzi")
+        dz_creator.create("media/map_full.png", "media/map_full.xml")
 
 
     return render_to_response("landing.html", locals(), RequestContext(request))
