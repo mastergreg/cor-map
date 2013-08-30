@@ -13,6 +13,13 @@ IMAGE_HEIGHT=10000
 SQSIZE=4
 LQSIZE=3
 
+def save_data(markers, f = "media/points.dat"):
+    fp = open(f, 'w')
+    for m in markers:
+        fp.write("{0} {1}\n".format(m.getX(), m.getY()))
+    fp.close()
+
+
 def fix_data(f = "media/points.dat"):
     fp = open(f)
     for line in fp:
@@ -32,6 +39,7 @@ def landing(request):
     IMAGE_WIDTH, IMAGE_HEIGHT = im.size
     draw = ImageDraw.Draw(im)
     markers = Marker.objects.all()
+    #save_data(markers)
     for pt in markers:
             print pt
             x,y = normalize(pt.getX(), pt.getY())
