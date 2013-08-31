@@ -2,6 +2,8 @@
 from unipath import Path
 PROJECT_ROOT = Path(__file__).ancestor(2)
 
+LOGIN_URL='/admin/'
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
