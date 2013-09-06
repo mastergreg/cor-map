@@ -35,12 +35,35 @@ def fix_data(f = "media/points.dat", realm = "S"):
         m.save()
     fp.close()
 
+def repaint():
+    global IMAGE_WIDTH
+    global IMAGE_HEIGHT
+    markers = Marker.objects.all()
+    if len(markers) > 0:
+        im = Image.open("media/map.png")
+        IMAGE_WIDTH, IMAGE_HEIGHT = im.size
+        draw = ImageDraw.Draw(im)
+
+        for pt in markers:
+                #print pt
+                pt.check()
+                pt.save()
+                x,y = normalize(pt.getX(), pt.getY())
+                draw.rectangle([(x-SQSIZE, y-SQSIZE), (x+SQSIZE, y+SQSIZE)], fill=pt.color())
+
+        im.save("media/map_full.png", "PNG")
+        dz_creator = deepzoom.ImageCreator(tile_size=128, tile_overlap=2, tile_format="png",
+                                                image_quality=0.8, resize_filter="bicubic")
+        dz_creator.create("media/map_full.png", "media/map_full.dzi")
+
+
+
+
 @login_required
 def landing(request):
     global IMAGE_WIDTH
     global IMAGE_HEIGHT
     markers = Marker.objects.filter(new = True)
-    print len(markers)
     if len(markers) > 0:
         im = Image.open("media/map_full.png")
         IMAGE_WIDTH, IMAGE_HEIGHT = im.size
