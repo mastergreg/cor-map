@@ -1,7 +1,7 @@
 from django.db import models
 
 
-ERROR_MARGIN = 5
+ERROR_MARGIN = 50
 
 # Create your models here.
 class Marker(models.Model):
@@ -40,8 +40,11 @@ class Marker(models.Model):
     def getY(self):
         return self.y
 
-    def visit(self):
-        self.visits += 1
+    def visit(self, other):
+        self.new = True
+        self.x = int(round((self.x*self.visits + other.x*other.visits)/float(self.visits+other.visits)))
+        self.y = int(round((self.y*self.visits + other.y*other.visits)/float(self.visits+other.visits)))
+        self.visits += other.visits
 
     def __unicode__(self):
         return str(self.x) + " " + str(self.y)
@@ -52,7 +55,7 @@ class Marker(models.Model):
                 y__range = (self.y - ERROR_MARGIN, self.y + ERROR_MARGIN))
         if markers.exists():
             for pt in markers:
-                pt.visit()
+                pt.visit(self)
                 return
         else:
             super(Marker, self).save(*args, **kwargs) # Call the "real" save() method.
