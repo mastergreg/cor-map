@@ -11,9 +11,9 @@ class Marker(models.Model):
             (IGNIS, "Ignis")
             )
     COLOR_CHOICES = {
-            SYRTIS: "#00CC00",
-            ALSIUS: "#336699",
-            IGNIS: "#DC143C"
+            SYRTIS: "#00FF00",
+            ALSIUS: "#0000FF",
+            IGNIS: "#FF0000"
             }
 
     x = models.IntegerField()
