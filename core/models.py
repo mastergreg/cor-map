@@ -57,7 +57,6 @@ class Marker(models.Model):
         if markers.exists():
             for pt in markers:
                 if pt.pk != self.pk:
-                    print "Found new close to me"
                     pt.visit(self)
                     super(Marker, pt).save(*args, **kwargs) # Call the "real" save() method.
         else:

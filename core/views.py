@@ -58,7 +58,6 @@ def repaint():
         draw = ImageDraw.Draw(im)
 
         for pt in markers:
-                #print pt
                 pt.check()
                 x,y = normalize(pt.getX(), pt.getY())
                 draw.ellipse([(x-SQSIZE, y-SQSIZE), (x+SQSIZE, y+SQSIZE)], fill=pt.color())
@@ -77,15 +76,12 @@ def landing(request):
     global IMAGE_HEIGHT
     markers = Marker.objects.filter(new = True)
     if len(markers) > 0:
-        print len(markers)
         markers = Marker.objects.all()
         im = Image.open("media/map.png")
         IMAGE_WIDTH, IMAGE_HEIGHT = im.size
         draw = ImageDraw.Draw(im)
-        print "Drawing again"
 
         for pt in markers:
-                #print pt
                 pt.check()
                 x,y = normalize(pt.getX(), pt.getY())
                 draw.ellipse([(x-SQSIZE, y-SQSIZE), (x+SQSIZE, y+SQSIZE)], fill=pt.color())
