@@ -1,5 +1,8 @@
 from django.db import models
 
+
+ERROR_MARGIN = 5
+
 # Create your models here.
 class Marker(models.Model):
     SYRTIS = "S"
@@ -45,8 +48,8 @@ class Marker(models.Model):
 
     def save(self, *args, **kwargs):
         markers = Marker.objects.filter(realm = self.realm, 
-                x__range = (self.x - 5, self.x + 5),
-                y__range = (self.y - 5, self.y + 5))
+                x__range = (self.x - ERROR_MARGIN, self.x + ERROR_MARGIN),
+                y__range = (self.y - ERROR_MARGIN, self.y + ERROR_MARGIN))
         if markers.exists():
             for pt in markers:
                 pt.visit()

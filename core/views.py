@@ -12,8 +12,8 @@ WORLD_HEIGHT=6144
 IMAGE_WIDTH=10000
 IMAGE_HEIGHT=10000
 
-SQSIZE=3
-LQSIZE=2
+SQSIZE=4
+LQSIZE=3
 
 def save_data(markers, f = "media/points.dat"):
     fp = open(f, 'w')
@@ -49,7 +49,7 @@ def repaint():
                 pt.check()
                 pt.save()
                 x,y = normalize(pt.getX(), pt.getY())
-                draw.rectangle([(x-SQSIZE, y-SQSIZE), (x+SQSIZE, y+SQSIZE)], fill=pt.color())
+                draw.ellipse([(x-SQSIZE, y-SQSIZE), (x+SQSIZE, y+SQSIZE)], fill=pt.color())
 
         im.save("media/map_full.png", "PNG")
         dz_creator = deepzoom.ImageCreator(tile_size=128, tile_overlap=2, tile_format="png",
@@ -74,7 +74,7 @@ def landing(request):
                 pt.check()
                 pt.save()
                 x,y = normalize(pt.getX(), pt.getY())
-                draw.rectangle([(x-SQSIZE, y-SQSIZE), (x+SQSIZE, y+SQSIZE)], fill=pt.color())
+                draw.ellipse([(x-SQSIZE, y-SQSIZE), (x+SQSIZE, y+SQSIZE)], fill=pt.color())
 
         im.save("media/map_full.png", "PNG")
         dz_creator = deepzoom.ImageCreator(tile_size=128, tile_overlap=2, tile_format="png",
