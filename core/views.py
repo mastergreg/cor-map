@@ -22,7 +22,7 @@ def save_data(markers, f = "media/points.dat"):
     fp.close()
 
 
-def fix_data(f = "media/points.dat"):
+def fix_data(f = "media/points.dat", realm = "S"):
     fp = open(f)
     for line in fp:
         x,y = map(int, line.split())
@@ -31,16 +31,15 @@ def fix_data(f = "media/points.dat"):
         m.y = y
         m.new = True
         m.visits = 1
+        m.realm = realm
         m.save()
     fp.close()
 
 @login_required
 def landing(request):
-    #fix_data()
     global IMAGE_WIDTH
     global IMAGE_HEIGHT
     markers = Marker.objects.filter(new = True)
-    #save_data(markers)
     print len(markers)
     if len(markers) > 0:
         im = Image.open("media/map_full.png")
@@ -52,7 +51,7 @@ def landing(request):
                 pt.check()
                 pt.save()
                 x,y = normalize(pt.getX(), pt.getY())
-                draw.rectangle([(x-SQSIZE, y-SQSIZE), (x+SQSIZE, y+SQSIZE)], fill="white")
+                draw.rectangle([(x-SQSIZE, y-SQSIZE), (x+SQSIZE, y+SQSIZE)], fill=pt.color())
 
         im.save("media/map_full.png", "PNG")
         dz_creator = deepzoom.ImageCreator(tile_size=128, tile_overlap=2, tile_format="png",
