@@ -33,6 +33,7 @@ class Marker(models.Model):
 
     def check(self):
         self.new = False
+        super(Marker, self).save()
 
     def getX(self):
         return self.x
@@ -55,7 +56,9 @@ class Marker(models.Model):
                 y__range = (self.y - ERROR_MARGIN, self.y + ERROR_MARGIN))
         if markers.exists():
             for pt in markers:
-                pt.visit(self)
-                return
+                if pt.pk != self.pk:
+                    print "Found new close to me"
+                    pt.visit(self)
+                    super(Marker, pt).save(*args, **kwargs) # Call the "real" save() method.
         else:
             super(Marker, self).save(*args, **kwargs) # Call the "real" save() method.
